@@ -4,13 +4,17 @@ $(()=>{
   const $cpu= $('#cpu');
   const $gameScreen= $('#mainScreen');
   //const $playerLife = $('#playerLife');
+  const cpuMove={
+    left: 'left',
+    right: 'right',
+    top: 'top',
+    bottom: 'bottom'
+  };
   let xTop = $gameScreen.offset().top, yLeft = $gameScreen.offset().left;
   let yRight = yLeft + $gameScreen.outerWidth();
   let xBottom = xTop +$gameScreen.outerHeight();
   console.log(xTop,yLeft,yRight,xBottom);
-  //let superAttack=0;
-
-
+  let superAttack=0;
 
   function getPositions(){
     const playerRight = $player.offset().left+$player.outerWidth();
@@ -25,8 +29,8 @@ $(()=>{
     return playerRight,playerLeft,playerTop,playerBottom,cpuRight,cpuLeft,cpuTop,cpuBottom;
   }
 
-  function collisionCPU(){
-    getPositions();
+  function collisionCPU(playerRight,playerLeft,playerTop,playerBottom,cpuRight,cpuLeft,cpuTop,cpuBottom){
+
     if(cpuRight < playerLeft){
       console.log('no collision');
     }else{
@@ -42,20 +46,38 @@ $(()=>{
       console.log('collision');
     }
   }
-  
-  function cpuMoves() {
-    setInterval(() => {
-      $cpu.animate({
-        left: '-=20%'
-      }, {
-        duration: 200,
-        progress: collisionCPU,
-        complete() {
-          $cpu.animate({ left: '+=20%' }, 100);
-        }
-      });
 
-    },5000);
+  function cpuSpeedAttack(){
+    return $cpu.animate({
+      left: '-=20%'
+    }, {
+      duration: 200,
+      progress: collisionCPU(getPositions()),
+      complete() {
+        $cpu.animate({ left: '+=20%' }, 100);
+      }
+    });
+  }
+
+  function cpuMoves() {
+    let result;
+    let count = 0;
+    for (const move in cpuMove)
+      if (Math.random() < 1/++count)
+        result = move;
+    return result;
+  }
+
+  function startCPUMovement(){
+    setInterval( ()=>{
+      console.log(cpuMoves());
+      superAttack++;
+      if(superAttack>5){
+        cpuSpeedAttack();
+        superAttack=0;
+        console.log(superAttack);
+      }
+    },1000);
   }
 
   function playerMoves(event) {
@@ -116,7 +138,7 @@ $(()=>{
   function play(){
     resizeWindow();
     $(window).keydown(playerMoves);
-    cpuMoves();
+    startCPUMovement();
   }
   play();
 
