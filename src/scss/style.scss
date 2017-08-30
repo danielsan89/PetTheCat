@@ -4,7 +4,7 @@ body {
 main{
   width:50%;
   margin:0 auto;
-  border:5px dashed gold;
+  border:1vw dashed gold;
 }
 
 main img{
@@ -34,12 +34,12 @@ main div#mainScreen{
 main div#statsScreen{
   position:relative;
   height:10vw;
-  border-top:5px dashed gold;
+  border-top:1vw dashed gold;
 }
 
 main div#statsScreen ul#life{
-  font-size: 40px;
-  color:white;
+  font-size: 4vw;
+  color:red;
   list-style: none;
 }
 
@@ -61,7 +61,7 @@ main div#statsScreen ul#specialAttack{
 main div#statsScreen ul#specialAttack li{
   display: inline-block;
   list-style-type: none;
-  padding-right: 20px;
+  padding-right: 1vw;
   vertical-align: middle;
   padding:0;
 }
@@ -72,12 +72,12 @@ main div#statsScreen ul#specialAttack li img{
 }
 
 main div.pjs{
-  width:6vw;
-  height:6vw;
+  width:5vw;
+  height:5vw;
 }
 
 main div.player{
-  border:1px solid red;
+  //border:1px solid red;
   position:absolute;
   top:50%;
   float:left;
@@ -86,7 +86,7 @@ main div.player{
 }
 
 main div.playerSpecialAttack{
-  border:1px solid red;
+  //border:1px solid red;
   position:absolute;
   top:50%;
   float:left;
@@ -94,8 +94,8 @@ main div.playerSpecialAttack{
   background-size: contain;
 }
 
-main div#playerHit{
-  border:1px solid red;
+main div.playerHit{
+  //border:1px solid red;
   position:absolute;
   top:50%;
   float:left;
@@ -104,7 +104,7 @@ main div#playerHit{
 }
 
 main div#boss{
-  border:1px solid green;
+  //border:1px solid green;
   position:absolute;
   top:50%;
   left:80%;
@@ -114,9 +114,9 @@ main div#boss{
 
 
 main div#dactyl{
-  border:1px solid red;
+  //border:1px solid red;
   position:absolute;
-  top:30%;
+  top:0%;
   float:left;
   width:9vw;
   height:9vw;
