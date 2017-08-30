@@ -4,7 +4,7 @@ body {
 main{
   width:50%;
   margin:0 auto;
-  border:1px solid orange;
+  border:5px dashed gold;
 }
 
 main img{
@@ -21,25 +21,8 @@ main div.gameScreen{
   padding:0.5%;
   margin:0.5%;
 }
-main div.pjs{
-  width:6vw;
-  height:6vw;
-}
-main div#player{
-  position:absolute;
-  top:50%;
-  float:left;
-}
 
-main div#cpu{
-  position:absolute;
-  top:50%;
-  left:80%;
-}
-
-
-
-div#mainScreen{
+main div#mainScreen{
   position:relative;
   height:40vw;
   background-image: url('../images/bg2.jpg');
@@ -48,16 +31,106 @@ div#mainScreen{
   background-repeat: no-repeat;
 }
 
-div#playerLife{
-  border:1px solid white;
-  background-color: green;
+main div#statsScreen{
+  position:relative;
+  height:10vw;
+  border-top:5px dashed gold;
 }
 
-.horizontal{
+main div#statsScreen ul#life{
+  font-size: 40px;
+  color:white;
+  list-style: none;
+}
+
+main div#statsScreen ul#life li{
+  display: inline-block;
+  padding-right: 20px;
+  vertical-align: middle;
+  padding:0 20px;;
+}
+
+main div#statsScreen ul#specialAttack{
+  display: inline-block;
+  list-style-type: none;
+  padding-right: 20px;
+  vertical-align: middle;
+  padding:0;
+}
+
+main div#statsScreen ul#specialAttack li{
+  display: inline-block;
+  list-style-type: none;
+  padding-right: 20px;
+  vertical-align: middle;
+  padding:0;
+}
+
+main div#statsScreen ul#specialAttack li img{
+  height:2vw;
+  width:2vw;
+}
+
+main div.pjs{
+  width:6vw;
+  height:6vw;
+}
+
+main div.player{
+  border:1px solid red;
+  position:absolute;
+  top:50%;
+  float:left;
+  background-image: url('../images/chrono.gif');
+  background-size: contain;
+}
+
+main div.playerSpecialAttack{
+  border:1px solid red;
+  position:absolute;
+  top:50%;
+  float:left;
+  background-image: url('../images/CronoLuminaire.gif');
+  background-size: contain;
+}
+
+main div#playerHit{
+  border:1px solid red;
+  position:absolute;
+  top:50%;
+  float:left;
+  background-image: url('../images/chronoHit.png');
+  background-size: contain;
+}
+
+main div#boss{
+  border:1px solid green;
+  position:absolute;
+  top:50%;
+  left:80%;
+  background-image: url('../images/boss3.gif');
+  background-size: contain;
+}
+
+
+main div#dactyl{
+  border:1px solid red;
+  position:absolute;
+  top:30%;
+  float:left;
+  width:9vw;
+  height:9vw;
+}
+
+.mirror{
   -moz-transform: scaleX(-1);
   -o-transform: scaleX(-1);
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
   filter: FlipH;
   -ms-filter: 'FlipH';
+}
+.hidden{
+  visibility: hidden;
+  display: none;
 }
