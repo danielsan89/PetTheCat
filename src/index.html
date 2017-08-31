@@ -18,39 +18,53 @@
   </head>
   <body>
     <main>
-      <div class="gameScreen" id="mainScreen">
-        <!--<div class="pjs cpu" id="cpuLife"></div>-->
-        <div class="pjs cpu" id="boss">
+      <div class="gameScreen hidden" id="mainScreen">
+        <ul id="special">
+          <li class="special">#</li>
+          <li class="special">#</li>
+          <li class="special">#</li>
+        </ul>
+        <p class="points">POINTS:<span id="points"></span></p>
+        <div class="boss">
           <img class="hidden" id="specialAttack" src="images/fire2.gif">
         </div>
-        <div class="cpu hidden" id="dactyl">
-            <img src="images/dactylAttack.gif">
-        </div>
-        <div class="pjs player" id="player">
-
-        </div>
+        <div class="hidden" id="dactyl"></div>
+        <div class="player"></div>
+        <div class="hidden" id="dragon"></div>
+      </div>
+      <div class="gameScreen" id="pauseScreen">
+        <h1>SURVIVE</h1>
+      </div>
+      <div class="gameScreen hidden" id="instructionsScreen">
+        <h2>rule#1: don't stop moving</h2>
+        <h2>rule#2: press <span class='key'>SHIFT</span> for a dash attack</h2>
+        <h2>rule#3: press <span class='key'>SPACE BAR</span> to steal a life</h2>
+        <h2>rule#4: the cat is your enemy</h2>
+        <h2>rule#5: you sure is that a cat?</h2>
+        <h2>rule#6: don't get hit</h2>
+        <h2>rule#7: survive</h2>
 
       </div>
       <div class="gameScreen" id="statsScreen">
-
-        <ul class="horizontalList" id="life">
-          <li>&hearts;</li>
-          <li>&hearts;</li>
-          <li>&hearts;</li>
-          <li>&hearts;</li>
-          <li>&hearts;</li>
-          <li>&hearts;</li>
-          <li>&hearts;</li>
+        <ul id="life">
+          <li class="life">&hearts;</li>
+          <li class="life">&hearts;</li>
+          <li class="life">&hearts;</li>
+          <li class="life">&hearts;</li>
+          <li class="life">&hearts;</li>
+          <li class="life">&hearts;</li>
         </ul>
-        <!--<ul class="horizontalList" id="specialAttack">
-          <li>&#9889;</li>
-          <li>&#9889;</li>
-          <li>&#9889;</li>
-        </ul>-->
       </div>
-      <button class="play">Play</button>
-
     </main>
+    <div class="menu">
+      <button id="play">Play</button>
+      <button id="restart">Restart</button>
+      <button id="instructions">Instructions</button>
+      <button id="ultraBoss">Ultra Boss</button>
+      <audio id="mainSong" src="audio/mainSong.mp3">
+
+      </audio>
+    </div>
 
   </body>
 </html>

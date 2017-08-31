@@ -1,3 +1,15 @@
+@font-face {
+    font-family: 'Fipps';
+    src: url('../fonts/fipps-regular-webfont.woff2') format('woff2'),
+         url('../fonts/fipps-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+  font-family: Fipps, sans-serif;
+}
+
 body {
   background: black;
 }
@@ -20,6 +32,7 @@ main div.gameScreen{
   position:relative;
   padding:0.5%;
   margin:0.5%;
+  color: white;
 }
 
 main div#mainScreen{
@@ -31,34 +44,52 @@ main div#mainScreen{
   background-repeat: no-repeat;
 }
 
-main div#statsScreen{
+main div#pauseScreen{
   position:relative;
-  height:10vw;
+  height:40vw;
+  background-image: url('../images/bg2.jpg');
+  background-position: top;
+  background-size:contain;
+  background-repeat: no-repeat;
+
+}
+
+main div#instructionsScreen{
+  position:relative;
+  height:40vw;
+  font-size: 1vw;
+}
+
+main div#statsScreen{
+
+  position:relative;
+  height:7vw;
   border-top:1vw dashed gold;
 }
 
 main div#statsScreen ul#life{
-  font-size: 4vw;
+  font-size: 2vw;
   color:red;
   list-style: none;
+  text-align: center;
 }
 
 main div#statsScreen ul#life li{
   display: inline-block;
-  padding-right: 20px;
+  padding-right: 2vw;
   vertical-align: middle;
-  padding:0 20px;;
+  padding:0
 }
 
-main div#statsScreen ul#specialAttack{
+main div#mainScreen ul#specialAttack{
   display: inline-block;
   list-style-type: none;
-  padding-right: 20px;
+  padding-right: 2vw;
   vertical-align: middle;
   padding:0;
 }
 
-main div#statsScreen ul#specialAttack li{
+main div#mainScreen ul#special li{
   display: inline-block;
   list-style-type: none;
   padding-right: 1vw;
@@ -71,22 +102,19 @@ main div#statsScreen ul#specialAttack li img{
   width:2vw;
 }
 
-main div.pjs{
+main div.player{
   width:5vw;
   height:5vw;
-}
-
-main div.player{
-  //border:1px solid red;
+  border:1px solid red;
   position:absolute;
   top:50%;
-  float:left;
+  left:0%;
   background-image: url('../images/chrono.gif');
   background-size: contain;
 }
 
 main div.playerSpecialAttack{
-  //border:1px solid red;
+  border:1px solid red;
   position:absolute;
   top:50%;
   float:left;
@@ -95,7 +123,7 @@ main div.playerSpecialAttack{
 }
 
 main div.playerHit{
-  //border:1px solid red;
+  border:1px solid red;
   position:absolute;
   top:50%;
   float:left;
@@ -103,8 +131,10 @@ main div.playerHit{
   background-size: contain;
 }
 
-main div#boss{
-  //border:1px solid green;
+main div.boss{
+  width:3vw;
+  height:3vw;
+  border:1px solid green;
   position:absolute;
   top:50%;
   left:80%;
@@ -112,14 +142,59 @@ main div#boss{
   background-size: contain;
 }
 
+main div.ultraBoss{
+  width:20vw;
+  height:20vw;
+  border:1px solid green;
+  position:absolute;
+  top:20%;
+  left:60%;
+  background-image: url('../images/ultraBoss.gif');
+  background-size:contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 
 main div#dactyl{
-  //border:1px solid red;
+  border:1px solid red;
+  background-image: url('../images/dactylAttack.gif');
+  background-size:contain;
+  background-repeat: no-repeat;
   position:absolute;
   top:0%;
   float:left;
   width:9vw;
   height:9vw;
+}
+
+main div#dragon{
+  border:1px solid red;
+  background-image: url('../images/Dragon_tank.gif');
+  background-size:contain;
+  background-repeat: no-repeat;
+  position:absolute;
+  top:78%;
+  float:left;
+  width:12vw;
+  height:12vw;
+}
+
+main div ul#special{
+  color:#FF6700 ;
+
+  padding:0;
+}
+
+main div#pauseScreen h1{
+  text-align: center;
+  font-size: 6vw;
+  margin-top:50%;
+}
+
+div.menu{
+  margin:0 auto;
+  text-align: center;
 }
 
 .mirror{
@@ -133,4 +208,14 @@ main div#dactyl{
 .hidden{
   visibility: hidden;
   display: none;
+}
+
+.key{
+  color:orange;
+}
+
+img.wasd{
+  width:12vw;
+  height:10vw;
+  float:right;
 }
