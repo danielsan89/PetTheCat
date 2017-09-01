@@ -15,7 +15,6 @@ $(()=>{
   const $stats = $('.lifes');
 
   function play(){
-
     //VARIABLES FOR MOVES
     const cpuPortalMoveX={
       1: '0%',
@@ -54,7 +53,6 @@ $(()=>{
     let specialAttack=null;
     //BOOLEAN FOR WIN/LOSE LOGIC
     let lose=false;
-
 
 
     //TIMERS
@@ -143,7 +141,6 @@ $(()=>{
         points+=500;
         if(!superBoss){
           upgradeBoss();
-          // stopUpgradeBoss();
           superBoss=true;
         }
         playSlash();
@@ -176,7 +173,7 @@ $(()=>{
         clearInterval( duration );
       }, 1000);
       lifes--;
-      console.log(lifes);
+
     }
 
 
@@ -442,19 +439,11 @@ $(()=>{
       mainSong.autoplay=true;
     }
 
-    // function
-    //   const grunt = new Audio('/audio/grunt.wav');
-    //   grunt.autoplay=true;
-    //   grunt.volume=0.5;
-    // }
 
     function playSlash(){
       const slash = new Audio('/audio/slash.mp3');
       slash.autoplay=true;
     }
-
-
-
 
 
     //GET NEW COORDINATES IF WINDOW IS RESIZED
@@ -474,7 +463,6 @@ $(()=>{
         playerMoves(event);
       }
     });
-
 
 
     //BUTTONS MENU
