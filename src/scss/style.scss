@@ -44,6 +44,15 @@ main div#mainScreen{
   background-repeat: no-repeat;
 }
 
+main div#mainScreenNight{
+  position:relative;
+  height:40vw;
+  background-image: url('../images/bg3.jpg');
+  background-position: top;
+  background-size:contain;
+  background-repeat: no-repeat;
+}
+
 main div#pauseScreen{
   position:relative;
   height:40vw;
@@ -55,6 +64,11 @@ main div#pauseScreen{
 }
 
 main div#instructionsScreen{
+  position:relative;
+  height:40vw;
+  font-size: 1vw;
+}
+main div#gameOverScreen{
   position:relative;
   height:40vw;
   font-size: 1vw;
@@ -122,7 +136,7 @@ main div.playerSpecialAttack{
   background-size: contain;
 }
 
-main div.playerHit{
+main div.playerCollided{
   border:1px solid red;
   position:absolute;
   top:50%;
@@ -137,7 +151,7 @@ main div.boss{
   border:1px solid green;
   position:absolute;
   top:50%;
-  left:80%;
+  left:60%;
   background-image: url('../images/boss3.gif');
   background-size: contain;
 }
@@ -153,23 +167,24 @@ main div.ultraBoss{
   background-size:contain;
   background-repeat: no-repeat;
   background-position: center;
+  text-align: center;
 }
 
 
-main div#dactyl{
+main div#portal{
   border:1px solid red;
-  background-image: url('../images/dactylAttack.gif');
+  background-image: url('../images/portal.gif');
   background-size:contain;
   background-repeat: no-repeat;
   position:absolute;
   top:0%;
-  float:left;
-  width:9vw;
-  height:9vw;
+  left:60%;
+  // width:6vw;
+  height:15vw;
 }
 
 main div#dragon{
-  border:1px solid red;
+  //border:1px solid red;
   background-image: url('../images/Dragon_tank.gif');
   background-size:contain;
   background-repeat: no-repeat;
@@ -182,7 +197,7 @@ main div#dragon{
 
 main div ul#special{
   color:#FF6700 ;
-
+  font-size: 1vw;
   padding:0;
 }
 
@@ -195,6 +210,10 @@ main div#pauseScreen h1{
 div.menu{
   margin:0 auto;
   text-align: center;
+}
+
+p.points{
+  font-size:1vw;
 }
 
 .mirror{
@@ -212,10 +231,4 @@ div.menu{
 
 .key{
   color:orange;
-}
-
-img.wasd{
-  width:12vw;
-  height:10vw;
-  float:right;
 }

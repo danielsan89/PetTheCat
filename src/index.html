@@ -28,24 +28,25 @@
         <div class="boss">
           <img class="hidden" id="specialAttack" src="images/fire2.gif">
         </div>
-        <div class="hidden" id="dactyl"></div>
+        <div class="" id="portal"></div>
         <div class="player"></div>
-        <div class="hidden" id="dragon"></div>
       </div>
       <div class="gameScreen" id="pauseScreen">
         <h1>SURVIVE</h1>
       </div>
       <div class="gameScreen hidden" id="instructionsScreen">
-        <h2>rule#1: don't stop moving</h2>
-        <h2>rule#2: press <span class='key'>SHIFT</span> for a dash attack</h2>
-        <h2>rule#3: press <span class='key'>SPACE BAR</span> to steal a life</h2>
-        <h2>rule#4: the cat is your enemy</h2>
-        <h2>rule#5: you sure is that a cat?</h2>
-        <h2>rule#6: don't get hit</h2>
-        <h2>rule#7: survive</h2>
-
+        <h2>#1: press <span class='key'>SHIFT</span> to attack</h2>
+        <h2>#2: press <span class='key'>SPACE BAR</span> to steal a life</h2><span class='key'># # #</span>
+        <h2>#3: the cat is your enemy</h2>
+        <h2>#4: is that a cat?</h2>
+        <h2>#5: don't get hit</h2>
+        <h1>GOOD LUCK!</h1>
       </div>
-      <div class="gameScreen" id="statsScreen">
+      <div class="gameScreen hidden" id="statsScreen">
+        <h2 class="finalScore"></h2>
+        <h2>GAME OVER</h2>
+      </div>
+      <div class="gameScreen lifes" id="statsScreen">
         <ul id="life">
           <li class="life">&hearts;</li>
           <li class="life">&hearts;</li>
@@ -55,15 +56,13 @@
           <li class="life">&hearts;</li>
         </ul>
       </div>
+
     </main>
     <div class="menu">
       <button id="play">Play</button>
-      <button id="restart">Restart</button>
       <button id="instructions">Instructions</button>
-      <button id="ultraBoss">Ultra Boss</button>
-      <audio id="mainSong" src="audio/mainSong.mp3">
+      <button id="restart">Restart</button>
 
-      </audio>
     </div>
 
   </body>

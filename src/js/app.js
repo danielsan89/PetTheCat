@@ -1,236 +1,230 @@
 $(()=>{
 
+  //GLOBALS
   const $player = $('.player');
-  const $cpu= $('.boss');
-  const $dactyl =$('#dactyl');
+  const $boss= $('.boss');
+  const $portal =$('#portal');
   const $mainScreen= $('#mainScreen');
   const $specialAttack = $('#specialAttack');
   const $special = $('#special');
-  const $life = $('.life');
-  const $dragon = $('#dragon');
+  const $life = $('#life');
   const $points=$('#points');
   const $pauseScreen= $('#pauseScreen');
   const $instructionsScreen = $('#instructionsScreen');
-  const $mainSong = $('#mainSong');
-
+  const $gameOverScreen = $('#gameOverScreen');
+  const $finalScore =$('.finalScore');
+  const $stats = $('.lifes');
 
   function play(){
-    const cpuDactylMoveX={
+
+    //VARIABLES FOR MOVES
+    const cpuPortalMoveX={
       1: '0%',
       2: '15%',
       3: '30%',
       4: '45%',
       5: '60%',
-      6: '75%'
+      6: '70%'
     };
-    const cpuDactylMoveY={
-      1: '0%',
-      2: '15%',
+    const cpuPortalMoveY={
+      1: '50%',
+      2: '40%',
       3: '30%'
     };
+
+    //STATS OF THE GAME
+    let lifes=6;
     let specialAttackCast= 3;
-    let dactylCollision=[];
+    let portalCollision=[];
     let playerCollision =[];
     let bossCollision =[];
-    let dragonCollision=[];
-    let gameSpeed = 1;
+    let gameSpeed = 2;
     let points=0;
-    let speedAttack=0;
     let gameScreenTop = $mainScreen.offset().top;
     let gameScreenLeft = $mainScreen.offset().left;
     let gameScreenRight = gameScreenLeft + $mainScreen.outerWidth(true);
     let gameScreenBottom = $mainScreen.outerHeight(true);
+    let superBoss=false;
+
+    //VARIABLES FOR TIMERS
     let levels = null;
     let pointerPoints = null;
-    let gameStart=null;
-    // function getPositions(){
-    //   let playerRight = $player.outerWidth(true);
-    //   let playerLeft = $player.offset().left;
-    //   let playerTop = $player.offset().top;
-    //   let playerBottom = $player.outerHeight(true);
-    //   let cpuRight = $player.offset().left+$player.outerWidth(true);
-    //   let cpuLeft = $cpu.offset().left;
-    //   let cpuTop = $cpu.offset().top;
-    //   let cpuBottom = $cpu.outerHeight(true);
-    //
-    //   return {
-    //     playerRight,playerLeft,playerTop,playerBottom,cpuRight,cpuLeft,cpuTop,cpuBottom
-    //   };
-    // }
+    let cpuMovement=null;
+    let portal= null;
+    let transformBoss=null;
+    let specialAttack=null;
+    //BOOLEAN FOR WIN/LOSE LOGIC
+    let lose=false;
 
-    // function collision() {
-    //   const positions=getPositions();
-    //   var b1 = positions.playerTop + positions.playerButtom;
-    //   var r1 = positions.playerLeft + positions.playerRight;
-    //   var b2 = positions.cpuTop + positions.cpuBottom;
-    //   var r2 = positions.cpuLeft + positions.cpuRight;
-    //
-    //   if (b1 < positions.cpuTop || positions.playerTop > b2 || r1 < positions.cpuLeft || positions.playerLeft > r2) return false;
-    //   return true;
-    // }
+
+
+    //TIMERS
+    function upgradeBoss(){
+      let transformation = 0;
+      transformBoss = setInterval(function () {
+        $boss.toggleClass('ultraBoss');
+        if (++transformation === 5) {
+          window.clearInterval(transformBoss);
+        }
+      }, 99);
+    }
+
+
     function levelUp(){
       levels = setInterval(()=>{
-        gameSpeed+=0.2;
-        console.log(gameSpeed);
-        if(gameSpeed>30){
-          stopLevelUp();
-        }
-      },5000);
+        gameSpeed+=0.1;
+      },4000/gameSpeed);
     }
 
     function stopLevelUp(){
       clearInterval(levels);
     }
 
-    function collision($player, $cpu) {
-      var x1 = $player.offset().left;
-      var y1 = $player.offset().top;
-      var h1 = $player.outerHeight(true);
-      var w1 = $player.outerWidth(true);
-      var b1 = y1 + h1;
-      var r1 = x1 + w1;
-      var x2 = $cpu.offset().left;
-      var y2 = $cpu.offset().top;
-      var h2 = $cpu.outerHeight(true);
-      var w2 = $cpu.outerWidth(true);
-      var b2 = y2 + h2;
-      var r2 = x2 + w2;
+    function startPoints(){
+      pointerPoints = setInterval(()=>{
+        points++;
+        $points.text(points);
+      },10);
+    }
 
-      if (b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2) return -1;
-      return 1;
+    function stopPoints(){
+      clearInterval(pointerPoints);
     }
 
     function startCPUMovement(){
-      const gameStart=setInterval( ()=>{
-        speedAttack++;
-        if(speedAttack>5){
-          cpuDash();
-          speedAttack=0;
-        }else if(speedAttack===4){
-          dragonAttack();
-        }
-      },1500/gameSpeed);
-      return gameStart;
+      cpuMovement= setInterval( ()=>{
+        cpuDash();
+      },6000/gameSpeed);
     }
 
-    function pauseCPUMovement(){
-      clearInterval(gameStart);
+    function stopCPUMovement(){
+      clearInterval(cpuMovement);
     }
 
-    // function cpuMoves() {
-    //   let result;
-    //   let count = 0;
-    //   for (const move in cpuMove)
-    //     if (Math.random() < 1/++count)
-    //       result = move;
-    //   return result;
-    // }
-
-
-    function cpuDash(){
-      $cpu.animate({
-        left: '-=20%'
-      }, {
-        duration: 1000/gameSpeed,
-        progress: () => storeCollisionCPU(),
-        complete() {
-          $cpu.animate({ left: '+=20%' }, 100);
-        }
-      });
-      removeLifeCPU();
-      cpuDactylAttack();
-
+    function startPortal(){
+      portal=setInterval(()=>{
+        cpuPortalAttack();
+      },8000/gameSpeed);
     }
+
+    function stopPortal(){
+      clearInterval(portal);
+    }
+
+    //COLLISIONS
+    function collision($player, $boss) {
+      var playerLeft = $player.offset().left;
+      var playerTop = $player.offset().top;
+      var playerBottom = $player.outerHeight(true);
+      var playerRight = $player.outerWidth(true);
+      var b1 = playerTop + playerBottom;
+      var r1 = playerLeft + playerRight;
+      var cpuLeft = $boss.offset().left;
+      var cpuTop = $boss.offset().top;
+      var cpuBottom = $boss.outerHeight(true);
+      var cpuRight = $boss.outerWidth(true);
+      var b2 = cpuTop + cpuBottom;
+      var r2 = cpuLeft + cpuRight;
+
+      if (b1 < cpuTop || playerTop > b2 || r1 < cpuLeft || playerLeft > r2) return -1;
+      return 1;
+    }
+
+    function storeCollisionPortal(){
+      portalCollision.push(collision($portal,$player));
+    }
+
     function storeCollisionCPU(){
-      bossCollision.push(collision($cpu,$player));
-    }
-    function storeCollisionDragon(){
-      dragonCollision.push(collision($dragon,$player));
+      bossCollision.push(collision($boss,$player));
     }
 
-    function setDactylPosition(){
-      const dactylPosition=[];
-      dactylPosition.push(1 + Math.floor(Math.random() * 6));
-      dactylPosition.push( 1 + Math.floor(Math.random() * 3));
-      return dactylPosition;
-    }
-
-    function cpuDactylAttack(){
-      const dactylPosition = setDactylPosition();
-      $dactyl.toggleClass('hidden');
-      $dactyl.animate({
-        top: '+=50%'
-      }, {
-        duration: 1000/gameSpeed,
-        progress: () => storeCollisionDactyl(),
-        complete() {
-          $dactyl.toggle( 'bounce', { times: 5 }, 'slow', () => {
-            $dactyl.css({top: cpuDactylMoveY[dactylPosition[1]], left: cpuDactylMoveX[dactylPosition[0]]});
-            $dactyl.toggleClass('hidden');
-          });
-          removeLifeDactyl();
+    function storeCollisionPlayer(){
+      playerCollision.push(collision($player,$boss));
+      if(playerCollision.includes(1)){
+        points+=500;
+        if(!superBoss){
+          upgradeBoss();
+          // stopUpgradeBoss();
+          superBoss=true;
         }
-      });
-    }
-
-    function storeCollisionDactyl(){
-      dactylCollision.push(collision($dactyl,$player));
-    }
-
-    function dragonAttack(){
-      $dragon.toggleClass('hidden');
-      $dragon.animate({
-        left: '+=70%'
-      }, {
-        duration: 3000/gameSpeed,
-        progress: () => storeCollisionDragon(),
-        complete() {
-          $dragon.toggleClass('hidden');
-          $dragon.css({left: '0%'}
-          );
-          removeLifeDragon();
-        }
-      });
-    }
-
-    function removeLifeDactyl(){
-      if(dactylCollision.includes(1) || bossCollision.includes(1)){
-        $('#life li:last').remove();
-        playerHit();
+        playSlash();
       }
-      dactylCollision=[];
+      playerCollision=[];
     }
-    function removeLifeCPU(){
+
+    function portalDamage(){
+      if(portalCollision.includes(1) || bossCollision.includes(1)){
+        $('#life li:last').remove();
+        playerCollided();
+        checkLose();
+      }
+      portalCollision=[];
+    }
+
+    function bossDamage(){
       if(bossCollision.includes(1)){
         $('#life li:last').remove();
-        playerHit();
+        playerCollided();
+        checkLose();
       }
       bossCollision=[];
     }
-    function removeLifeDragon(){
-      if(dragonCollision.includes(1)){
-        $('#life li:last').remove();
-        playerHit();
-      }
-      dragonCollision=[];
+
+    function playerCollided(){
+      playerCollidedEffects();
+      const duration = setInterval(playerCollidedEffects ,999);
+      setTimeout(function() {
+        clearInterval( duration );
+      }, 1000);
+      lifes--;
+      console.log(lifes);
     }
 
-    function addLife(){
-      $life.append('<li class="life">&hearts;</li>');
+
+    //CPU MOVES
+    function cpuDash(){
+      $boss.animate({
+        left: '-=10%'
+      }, {
+        duration: 2000/gameSpeed,
+        progress: () => storeCollisionCPU(),
+        complete() {
+          $boss.animate({ left: '+=10%' }, 100);
+          bossDamage();
+        }
+      });
+
     }
 
-    function removeSpecial(){
-      $('#special li:last').remove();
-      if($special.length>0 && $life.length<6){
-        addLife();
-      }
+    function cpuPortalAttack(){
+      const portalPosition = setPortalPosition();
+      $portal.animate({
+        width: '30%'
+      }, {
+        duration: 4000/gameSpeed,
+        progress: () => storeCollisionPortal(),
+        complete() {
+
+          $portal.css({top: cpuPortalMoveY[portalPosition[1]], left: cpuPortalMoveX[portalPosition[0]], width: ''});
+          portalDamage();
+        }
+      });
     }
 
+    //RANDOM POSITIONING FOR PORTAL
+    function setPortalPosition(){
+      const portalPosition=[];
+      portalPosition.push(1 + Math.floor(Math.random() * 6));
+      portalPosition.push( 1 + Math.floor(Math.random() * 3));
+      return portalPosition;
+    }
+
+    //USER MOVES
     function playerMoves(event) {
       switch (event.which) {
         case 32:
           playerSpecialAttack();
-          removeSpecial();
+          specialCasted();
           break;
         case 16:
           playerDash();
@@ -252,15 +246,15 @@ $(()=>{
 
     function playerSpecialAttack(){
       if(specialAttackCast<1){
+        specialAttackCast--;
         return false;
       }
       playerSpecialAttackEffects();
-      const duration = setInterval(playerSpecialAttackEffects ,999);
+      specialAttack = setInterval(playerSpecialAttackEffects ,999);
       setTimeout(function() {
-        clearInterval( duration );
+        clearInterval( specialAttack );
       }, 1000);
       specialAttackCast--;
-
     }
 
     function playerSpecialAttackEffects(){
@@ -269,15 +263,11 @@ $(()=>{
     }
 
     function playerDash(){
-      if(dashAvailable() && isMirror()){
+      if(checkDash() && isMirror()){
         playerDashLeft();
-      }else if(dashAvailable() && !isMirror()){
+      }else if(checkDash() && !isMirror()){
         playerDashRight();
       }
-    }
-
-    function isMirror(){
-      return ($player.hasClass('mirror'));
     }
 
     function playerDashLeft(){
@@ -305,49 +295,6 @@ $(()=>{
         });
       }
     }
-
-    // function playerLimitedDashRight(){
-    //
-    //
-    //
-    //
-    // }
-    //
-    // function playerLimitedDashLeft(){
-    //
-    // }
-
-    function dashAvailable(){
-      if($player.hasClass('playerHit') || $player.hasClass('playerSpecialAttack')){
-        return false;
-      }
-      return true;
-    }
-
-    function storeCollisionPlayer(){
-      playerCollision.push(collision($player,$cpu));
-      if(playerCollision.includes(1)){
-        points+=100;
-      }
-      playerCollision=[];
-    }
-
-    function startPoints(){
-      pointerPoints = setInterval(()=>{
-        points++;
-        $points.text(points);
-      },10);
-    }
-
-    function finishGame(){
-      clearInterval(pointerPoints);
-    }
-    //dash = true
-    //dash();--->dashAvailable?--->true DASH!---->cancellDash()
-    //dash=false;
-    //dash();--->dashAvailable?---->false NO DASH!
-
-
 
     function playerLeftMove(){
       if(playerCheckLeftMirror()){
@@ -385,6 +332,11 @@ $(()=>{
       $player.animate({top: '+=2%'}, 1);
     }
 
+    //CHECKS FENCES
+    function isMirror(){
+      return ($player.hasClass('mirror'));
+    }
+
     function playerCheckUp(){
       return (($player.offset().top-$player.offset().top*0.01)<=gameScreenBottom*0.5);
     }
@@ -409,24 +361,47 @@ $(()=>{
       return (($player.offset().left-$player.offset().left*0.01)>=gameScreenLeft && !$player.hasClass('mirror'));
     }
 
+    function checkDash(){
+      if($player.hasClass('playerCollided') || $player.hasClass('playerSpecialAttack')){
+        return false;
+      }
+      return true;
+    }
+
     function mirror(){
       $player.toggleClass('mirror');
     }
 
-    function playerHit(){
-      playerHitEffects();
-      const duration = setInterval(playerHitEffects ,999);
-      setTimeout(function() {
-        clearInterval( duration );
-      }, 1000);
+    //OTHERS
+    function playerCollidedEffects(){
+      $player.toggleClass('playerCollided');
+
     }
 
-    function playerHitEffects(){
-      $player.toggleClass('playerHit');
+    function specialCasted(){
+      $('#special li:last').remove();
+      console.log(lifes);
+      if(specialAttackCast>=0){
+        console.log(specialAttackCast);
+        addLife();
+      }
     }
 
+    function addLife(){
+      if(lifes<6){
+        $life.append('<li class="life">&hearts;</li>');
+        lifes++;
+      }
+
+    }
+
+    function finalScore(){
+      $finalScore.text($points);
+    }
+
+    //TOGGLES
     function showUltraBoss(){
-      $cpu.toggleClass('ultraBoss');
+      $boss.toggleClass('ultraBoss');
     }
 
     function showMainScreen(){
@@ -440,12 +415,50 @@ $(()=>{
     function hidePauseScreen(){
       $pauseScreen.addClass('hidden');
     }
-    function playAudio(){
+    function showGameOverScreen(){
+      $gameOverScreen.toggleClass('hidden');
+    }
+    function hideStatsScreen(){
+      $stats.toggleClass('hidden');
+    }
+
+    //WIN OR LOSE
+    function checkLose(){
+      if(lifes<1){
+        stopLevelUp();
+        stopCPUMovement();
+        stopPortal();
+        stopPoints();
+        finalScore();
+        hideStatsScreen();
+        showGameOverScreen();
+        lose=true;
+      }
+    }
+
+    //SOUNDS
+    function playBGMusic(){
       const mainSong = new Audio('/audio/mainSong.mp3');
       mainSong.loop=true;
       mainSong.autoplay=true;
     }
 
+    // function
+    //   const grunt = new Audio('/audio/grunt.wav');
+    //   grunt.autoplay=true;
+    //   grunt.volume=0.5;
+    // }
+
+    function playSlash(){
+      const slash = new Audio('/audio/slash.mp3');
+      slash.autoplay=true;
+    }
+
+
+
+
+
+    //GET NEW COORDINATES IF WINDOW IS RESIZED
     $(window).resize(resizeWindow);
     function resizeWindow(){
       console.log('resizing window!');
@@ -456,24 +469,31 @@ $(()=>{
       console.log(gameScreenTop,gameScreenLeft,gameScreenRight,gameScreenBottom);
     }
 
-    $(window).keydown(playerMoves);
+
+    $(window).keydown(function() {
+      if(!lose){
+        playerMoves(event);
+      }
+    });
 
 
+
+    //BUTTONS MENU
     $('#play').one('click',function(event){
       event.preventDefault();
       hidePauseScreen();
       showMainScreen();
-      playAudio();
+      playBGMusic();
       if(!$instructionsScreen.hasClass('hidden')){
         showInstructionsScreen();
       }
       levelUp();
       startCPUMovement();
+      startPortal();
       startPoints();
       resizeWindow();
     });
 
-    $('#pause').on('click',pauseCPUMovement);
     $('#restart').on('click',function(){
       location.reload();
     });
@@ -487,8 +507,4 @@ $(()=>{
   }
 
   play();
-
-
-
-
 });
