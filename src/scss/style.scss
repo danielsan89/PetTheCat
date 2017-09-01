@@ -68,13 +68,16 @@ main div#instructionsScreen{
   height:40vw;
   font-size: 1vw;
 }
-main div#gameOverScreen{
-  position:relative;
-  height:40vw;
-  font-size: 1vw;
-}
+
 
 main div#statsScreen{
+
+  position:relative;
+  height:7vw;
+  border-top:1vw dashed gold;
+}
+
+main div#gameOver{
 
   position:relative;
   height:7vw;
@@ -119,7 +122,7 @@ main div#statsScreen ul#specialAttack li img{
 main div.player{
   width:5vw;
   height:5vw;
-  border:1px solid red;
+  // border:1px solid red;
   position:absolute;
   top:50%;
   left:0%;
@@ -128,7 +131,7 @@ main div.player{
 }
 
 main div.playerSpecialAttack{
-  border:1px solid red;
+  // border:1px solid red;
   position:absolute;
   top:50%;
   float:left;
@@ -137,7 +140,7 @@ main div.playerSpecialAttack{
 }
 
 main div.playerCollided{
-  border:1px solid red;
+  // border:1px solid red;
   position:absolute;
   top:50%;
   float:left;
@@ -148,7 +151,7 @@ main div.playerCollided{
 main div.boss{
   width:3vw;
   height:3vw;
-  border:1px solid green;
+  //border:1px solid green;
   position:absolute;
   top:50%;
   left:60%;
@@ -159,7 +162,7 @@ main div.boss{
 main div.ultraBoss{
   width:20vw;
   height:20vw;
-  border:1px solid green;
+  // border:1px solid green;
   position:absolute;
   top:20%;
   left:60%;
@@ -172,7 +175,7 @@ main div.ultraBoss{
 
 
 main div#portal{
-  border:1px solid red;
+  // border:1px solid red;
   background-image: url('../images/portal.gif');
   background-size:contain;
   background-repeat: no-repeat;

@@ -6,7 +6,6 @@ $(()=>{
   const $portal =$('#portal');
   const $mainScreen= $('#mainScreen');
   const $specialAttack = $('#specialAttack');
-  const $special = $('#special');
   const $life = $('#life');
   const $points=$('#points');
   const $pauseScreen= $('#pauseScreen');
@@ -94,7 +93,7 @@ $(()=>{
     function startCPUMovement(){
       cpuMovement= setInterval( ()=>{
         cpuDash();
-      },6000/gameSpeed);
+      },10000/gameSpeed);
     }
 
     function stopCPUMovement(){
@@ -104,7 +103,7 @@ $(()=>{
     function startPortal(){
       portal=setInterval(()=>{
         cpuPortalAttack();
-      },8000/gameSpeed);
+      },6000/gameSpeed);
     }
 
     function stopPortal(){
