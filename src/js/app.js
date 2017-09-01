@@ -434,14 +434,14 @@ $(()=>{
 
     //SOUNDS
     function playBGMusic(){
-      const mainSong = new Audio('/audio/mainSong.mp3');
+      const mainSong = new Audio('/public/audio/mainSong.mp3');
       mainSong.loop=true;
       mainSong.autoplay=true;
     }
 
 
     function playSlash(){
-      const slash = new Audio('/audio/slash.mp3');
+      const slash = new Audio('/public/audio/slash.mp3');
       slash.autoplay=true;
     }
 

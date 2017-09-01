@@ -1,7 +1,7 @@
 @font-face {
     font-family: 'Fipps';
-    src: url('../fonts/fipps-regular-webfont.woff2') format('woff2'),
-         url('../fonts/fipps-regular-webfont.woff') format('woff');
+    src: url('/public/fonts/fipps-regular-webfont.woff2') format('woff2'),
+         url('/public/fonts/fipps-regular-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
@@ -38,7 +38,7 @@ main div.gameScreen{
 main div#mainScreen{
   position:relative;
   height:40vw;
-  background-image: url('../images/bg2.jpg');
+  background-image: url('/public/images/bg2.jpg');
   background-position: top;
   background-size:contain;
   background-repeat: no-repeat;
@@ -47,7 +47,7 @@ main div#mainScreen{
 main div#mainScreenNight{
   position:relative;
   height:40vw;
-  background-image: url('../images/bg3.jpg');
+  background-image: url('/public/images/bg3.jpg');
   background-position: top;
   background-size:contain;
   background-repeat: no-repeat;
@@ -56,7 +56,7 @@ main div#mainScreenNight{
 main div#pauseScreen{
   position:relative;
   height:40vw;
-  background-image: url('../images/bg2.jpg');
+  background-image: url('/public/images/bg2.jpg');
   background-position: top;
   background-size:contain;
   background-repeat: no-repeat;
@@ -126,7 +126,7 @@ main div.player{
   position:absolute;
   top:50%;
   left:0%;
-  background-image: url('../images/chrono.gif');
+  background-image: url('/public/images/chrono.gif');
   background-size: contain;
 }
 
@@ -135,7 +135,7 @@ main div.playerSpecialAttack{
   position:absolute;
   top:50%;
   float:left;
-  background-image: url('../images/CronoLuminaire.gif');
+  background-image: url('/public/images/CronoLuminaire.gif');
   background-size: contain;
 }
 
@@ -144,7 +144,7 @@ main div.playerCollided{
   position:absolute;
   top:50%;
   float:left;
-  background-image: url('../images/chronoHit.png');
+  background-image: url('/public/images/chronoHit.png');
   background-size: contain;
 }
 
@@ -155,7 +155,7 @@ main div.boss{
   position:absolute;
   top:50%;
   left:60%;
-  background-image: url('../images/boss3.gif');
+  background-image: url('/public/images/boss3.gif');
   background-size: contain;
 }
 
@@ -166,7 +166,7 @@ main div.ultraBoss{
   position:absolute;
   top:20%;
   left:60%;
-  background-image: url('../images/ultraBoss.gif');
+  background-image: url('/public/images/ultraBoss.gif');
   background-size:contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -176,7 +176,7 @@ main div.ultraBoss{
 
 main div#portal{
   // border:1px solid red;
-  background-image: url('../images/portal.gif');
+  background-image: url('/public/images/portal.gif');
   background-size:contain;
   background-repeat: no-repeat;
   position:absolute;
@@ -188,7 +188,7 @@ main div#portal{
 
 main div#dragon{
   //border:1px solid red;
-  background-image: url('../images/Dragon_tank.gif');
+  background-image: url('/public/images/Dragon_tank.gif');
   background-size:contain;
   background-repeat: no-repeat;
   position:absolute;
