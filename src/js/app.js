@@ -10,7 +10,7 @@ $(()=>{
   const $points=$('#points');
   const $pauseScreen= $('#pauseScreen');
   const $instructionsScreen = $('#instructionsScreen');
-  const $gameOverScreen = $('#gameOverScreen');
+  const $gameOverScreen = $('#gameOver');
   const $finalScore =$('.finalScore');
   const $stats = $('.lifes');
 
@@ -60,10 +60,10 @@ $(()=>{
       let transformation = 0;
       transformBoss = setInterval(function () {
         $boss.toggleClass('ultraBoss');
-        if (++transformation === 5) {
+        if (++transformation === 15) {
           window.clearInterval(transformBoss);
         }
-      }, 99);
+      }, 200);
     }
 
 
@@ -173,7 +173,6 @@ $(()=>{
         clearInterval( duration );
       }, 1000);
       lifes--;
-
     }
 
 
@@ -267,11 +266,14 @@ $(()=>{
     }
 
     function playerDashLeft(){
-      if($player.offset().left-($player.offset().left-$player.offset().left*0.3)>$player.offset().left-$mainScreen.offset().left){
+      const playerLeft = $player.offset().left;
+      const playerLeftDash = playerLeft-playerLeft*0.3;
+      if(playerLeftDash<gameScreenLeft){
+      //if($player.offset().left-($player.offset().left-$player.offset().left*0.3)>$player.offset().left-$mainScreen.offset().left){
         return false;
       }else{
         $player.animate({
-          left: '-=30%'
+          left: '-=20%'
         }, {
           duration: 90,
           progress: () => storeCollisionPlayer()
@@ -280,11 +282,14 @@ $(()=>{
     }
 
     function playerDashRight(){
-      if($player.outerWidth(true)+($player.outerWidth(true)+$player.outerWidth(true)*0.3)<$player.outerWidth(true)-($mainScreen.outerWidth()+$mainScreen.offset().left)){
+      const gameScreenRight = (gameScreenLeft + $mainScreen.outerWidth());
+      const playerRight = $player.offset().left+$player.outerWidth(true);
+      const playerRightDash = playerRight+playerRight*0.3;
+      if(playerRightDash>gameScreenRight){
         return false;
       }else{
         $player.animate({
-          left: '+=30%'
+          left: '+=20%'
         }, {
           duration: 90,
           progress: () => storeCollisionPlayer()
@@ -376,9 +381,7 @@ $(()=>{
 
     function specialCasted(){
       $('#special li:last').remove();
-      console.log(lifes);
       if(specialAttackCast>=0){
-        console.log(specialAttackCast);
         addLife();
       }
     }
@@ -388,7 +391,6 @@ $(()=>{
         $life.append('<li class="life">&hearts;</li>');
         lifes++;
       }
-
     }
 
     function finalScore(){
@@ -439,25 +441,23 @@ $(()=>{
       mainSong.autoplay=true;
     }
 
-
     function playSlash(){
       const slash = new Audio('/public/audio/slash.mp3');
       slash.autoplay=true;
     }
 
-
     //GET NEW COORDINATES IF WINDOW IS RESIZED
     $(window).resize(resizeWindow);
     function resizeWindow(){
-      console.log('resizing window!');
+
       gameScreenTop = $mainScreen.offset().top;
       gameScreenLeft = $mainScreen.offset().left;
       gameScreenRight = (gameScreenLeft + $mainScreen.outerWidth());
       gameScreenBottom = (gameScreenTop +$mainScreen.outerHeight());
-      console.log(gameScreenTop,gameScreenLeft,gameScreenRight,gameScreenBottom);
+
     }
 
-
+    //EVENT TO START CAPTURE PLAYER MOVEMENT
     $(window).keydown(function() {
       if(!lose){
         playerMoves(event);
