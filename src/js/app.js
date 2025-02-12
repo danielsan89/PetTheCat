@@ -140,6 +140,7 @@ $(()=>{
       if(playerCollision.includes(1)){
         points+=500;
         if(!superBoss){
+          playBGMusic();
           upgradeBoss();
           superBoss=true;
         }
@@ -470,7 +471,6 @@ $(()=>{
       event.preventDefault();
       hidePauseScreen();
       showMainScreen();
-      playBGMusic();
       if(!$instructionsScreen.hasClass('hidden')){
         showInstructionsScreen();
       }

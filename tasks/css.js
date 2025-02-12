@@ -1,24 +1,25 @@
-const gulp             = require('gulp');
-const sass             = require('gulp-sass');
-const autoprefixer     = require('gulp-autoprefixer');
-const minifycss        = require('gulp-minify-css');
-const concat           = require('gulp-concat');
-const sourcemaps       = require('gulp-sourcemaps');
-const rename           = require('gulp-rename');
-const gulpIf           = require('gulp-if');
-const browserSync      = require('browser-sync');
-const config           = require('../package').gulp;
+const gulp = require('gulp');
+const sass = require('gulp-sass')(require('node-sass')); 
+const autoprefixer = require('gulp-autoprefixer');
+const cleanCSS = require('gulp-clean-css'); 
+const concat = require('gulp-concat');
+const sourcemaps = require('gulp-sourcemaps');
+const rename = require('gulp-rename');
+const gulpIf = require('gulp-if');
+const browserSync = require('browser-sync').create();
+const config = require('../package').gulp;
+
+global.production = process.env.NODE_ENV === 'production';
 
 const buildCss = () => {
   return gulp.src(`${config.src.scss}${config.main.scss}`)
-    .pipe(sass({ style: 'expanded' }))
-    .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
+    .pipe(sourcemaps.init()) 
+    .pipe(sass().on('error', sass.logError)) 
+    .pipe(autoprefixer({ browsers: ['last 2 versions'] })) 
     .pipe(concat(config.output.css))
-    .pipe(concat(config.output.css))
-    .pipe(sourcemaps.init())
-    .pipe(gulpIf(global.production, minifycss()))
+    .pipe(gulpIf(global.production, cleanCSS()))
     .pipe(gulpIf(global.production, rename({ suffix: '.min' })))
-    .pipe(sourcemaps.write())
+    .pipe(sourcemaps.write('.')) 
     .pipe(gulp.dest(config.dest.css))
     .pipe(gulpIf(!global.production, browserSync.stream()));
 };

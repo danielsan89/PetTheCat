@@ -1,6 +1,9 @@
-const gulp             = require('gulp');
+const gulp = require('gulp');
 
-gulp.task('deploy', () => {
+const deploy = gulp.series((done) => {
   global.production = true;
-  return gulp.start(['build-app']);
-});
+  done();
+}, 'build-app');
+
+gulp.task('deploy', deploy);
+module.exports = deploy;

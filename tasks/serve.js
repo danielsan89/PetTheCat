@@ -1,12 +1,11 @@
-const gulp             = require('gulp');
-const browserSync      = require('browser-sync').create();
+const gulp = require('gulp');
+const browserSync = require('browser-sync').create();
 
 const serve = () => {
-  browserSync.init(null, {
+  browserSync.init({
     server: { baseDir: './' },
     files: ['public/**/*.*'],
-    browser: 'google chrome',
-    port: 7000,
+    browser: process.platform === 'darwin' ? 'Google Chrome' : 'chrome',
     reloadDelay: 1000
   });
 };
