@@ -1,65 +1,61 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>PetTheCat</title>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
-    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js"></script>
-    <!-- inject:css -->
-    <link rel="stylesheet" href="/public/css/style.css">
-    <!-- endinject -->
-    <!-- inject:js -->
-    <script src="/public/js/app.js"></script>
-    <!-- endinject -->
-  </head>
-  <body>
-    <main>
-      <div class="gameScreen hidden" id="mainScreen">
-        <ul id="special">
-          <li class="special">#</li>
-          <li class="special">#</li>
-          <li class="special">#</li>
-        </ul>
-        <p class="points">POINTS:<span id="points"></span></p>
-        <div class="boss">
-          <img class="hidden" id="specialAttack" src="/public/images/fire2.gif">
-        </div>
-        <div class="" id="portal"></div>
-        <div class="player"></div>
+
+<head>
+  <meta charset="utf-8">
+  <title>PetTheCat</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js"></script>
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/public/css/style.css">
+  <!-- endinject -->
+  <!-- inject:js -->
+  <script src="/public/js/app.js"></script>
+  <!-- endinject -->
+</head>
+
+<body>
+  <main>
+    <div class="gameScreen hidden" id="mainScreen">
+      <ul id="special">
+        <li class="special">#</li>
+        <li class="special">#</li>
+        <li class="special">#</li>
+      </ul>
+      <p class="points">POINTS:<span id="points"></span></p>
+      <div class="boss">
+        <img class="hidden" id="specialAttack" src="/public/images/fire2.gif">
       </div>
-      <div class="gameScreen" id="pauseScreen">
-        <h2>PORTAL</h2>
-        <h1>SURVIVE</h1>
-      </div>
-      <div class="gameScreen hidden" id="instructionsScreen">
-        <h2>#1: press <span class='key'>SHIFT</span> to attack</h2>
-        <h2>#2: press <span class='key'>SPACE BAR</span> to steal a life</h2>
-        <h2>#3: you only have <span class='key'># # #</span> choose wisely</h2>
-        <h2>#3: the cat is your enemy</h2>
-        <h2>#4: is that a cat?</h2>
-        <h2>#5: don't get hit</h2>
-        <h1>GOOD LUCK!</h1>
-      </div>
-      <div class="gameScreen hidden" id="gameOver">
-        <h2>GAME OVER</h2>
-      </div>
-      <div class="gameScreen lifes" id="statsScreen">
-        <ul id="life">
-          <li class="life">&hearts;</li>
-          <li class="life">&hearts;</li>
-          <li class="life">&hearts;</li>
-          <li class="life">&hearts;</li>
-          <li class="life">&hearts;</li>
-          <li class="life">&hearts;</li>
-        </ul>
-      </div>
-    </main>
-    <div class="menu">
-      <button id="play">Play</button>
-      <button id="instructions">Instructions</button>
-      <button id="restart">Restart</button>
+      <div class="" id="portal"></div>
+      <div class="player"></div>
     </div>
-  </body>
+    <div class="gameScreen" id="pauseScreen">
+      <h2>PORTAL</h2>
+      <h1>SURVIVE</h1>
+    </div>
+    <div class="gameScreen hidden" id="instructionsScreen">
+      <h2>#1: press <span class='key'>SHIFT</span> to attack</h2>
+      <h2>#2: press <span class='key'>SPACE BAR</span> to steal a life</h2>
+      <h2>#3: you only have <span class='key'># # #</span> choose wisely</h2>
+      <h2>#3: the cat is your enemy</h2>
+      <h2>#4: is that a cat?</h2>
+      <h2>#5: don't get hit</h2>
+      <h1>GOOD LUCK!</h1>
+    </div>
+    <div class="gameScreen hidden" id="gameOver">
+      <h2>GAME OVER</h2>
+    </div>
+    <div class="gameScreen lifes" id="statsScreen">
+      <div class="menu">
+        <button id="play">Play</button>
+        <button id="instructions">Instructions</button>
+        <button id="restart">Restart</button>
+      </div>
+    </div>
+  </main>
+
+</body>
+
 </html>

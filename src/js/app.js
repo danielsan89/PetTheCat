@@ -142,6 +142,10 @@ $(()=>{
         if(!superBoss){
           playBGMusic();
           upgradeBoss();
+          levelUp();
+          startCPUMovement();
+          startPortal();
+          startPoints();
           superBoss=true;
         }
         playSlash();
@@ -474,10 +478,6 @@ $(()=>{
       if(!$instructionsScreen.hasClass('hidden')){
         showInstructionsScreen();
       }
-      levelUp();
-      startCPUMovement();
-      startPortal();
-      startPoints();
       resizeWindow();
     });
 
