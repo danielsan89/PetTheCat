@@ -43,17 +43,17 @@ p {
   background-repeat: no-repeat;
 }
 
-.main-screen-2 {
+.main-screen-boss {
   position: relative;
   height: 40vw;
   background-image: url('../images/bg1.jpg');
-  background-position: top;
+  background-position: 40%;
   background-size: contain;
   background-repeat: no-repeat;
 }
 
 
-#pause-screen {
+.pause-screen {
   position: relative;
   height: 40vw;
   background-image: url('../images/bg2.jpg');
@@ -70,51 +70,52 @@ p {
 }
 
 
-#game-actions {
-
+.game-actions {
   position: relative;
   height: 7vw;
   border-top: 1vw dashed gold;
 }
 
-#game-over {
+.game-over {
   text-align: center;
   position: relative;
   height: auto;
   border-top: 1vw dashed gold;
 }
 
-#game-actions ul#life {
+ul.lifes {
   font-size: 2vw;
   color: red;
   list-style: none;
   text-align: center;
+
+  li {
+    display: inline-block;
+    padding-right: 2vw;
+    vertical-align: middle;
+    padding: 0;
+
+  }
 }
 
-#game-actions ul#life li {
-  display: inline-block;
-  padding-right: 2vw;
-  vertical-align: middle;
-  padding: 0
-}
 
-#main-screen ul#special-attack {
+.special-attack-list {
   display: inline-block;
   list-style-type: none;
   padding-right: 2vw;
   vertical-align: middle;
   padding: 0;
+
+  li {
+    display: inline-block;
+    padding-right: 1vw;
+    vertical-align: middle;
+    padding: 0;
+  }
 }
 
-#main-screen ul#special li {
-  display: inline-block;
-  list-style-type: none;
-  padding-right: 1vw;
-  vertical-align: middle;
-  padding: 0;
-}
 
-#game-actions ul#special-attack li img {
+.special-attack li img {
   height: 2vw;
   width: 2vw;
 }
@@ -157,60 +158,62 @@ p {
   left: 60%;
   background-image: url('../images/boss3.gif');
   background-size: contain;
-
 }
 
-.ultra-boss {
-  width: 15vw; // Smaller width for hitbox
-  height: 1f5vw; // Smaller height for hitbox
+.boss-game-over {
+  width: 20vw;
+  height: 20vw;
   border: 1px solid green;
   position: absolute;
   top: 20%;
   left: 60%;
-  border-radius: 50% / 30%;
-  overflow: visible;
+  background-image: url('../images/nRq.gif');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  text-align: center;
+}
 
-  &::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 30vw;
-    height: 30vw;
-    background-image: url('../images/scratch-cat-claws.gif');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    transform: translate(-50%, -50%);
-  }
+.ultra-boss {
+  width: 20vw;
+  height: 20vw;
+  border: 1px solid green;
+  position: absolute;
+  top: 20%;
+  left: 60%;
+  background-image: url('../images/scratch-cat-claws.gif');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  text-align: center;
 }
 
 
-#portal {
+.portal {
   border: 1px solid red;
   background-image: url('../images/portal.gif');
   background-size: contain;
   background-repeat: no-repeat;
+  border-radius: 50%;
   position: absolute;
   top: 0%;
   left: 60%;
-  // width:6vw;
   height: 15vw;
 }
 
 
-#special {
+.special {
   color: #FF6700;
   font-size: 1vw;
   padding: 0;
 }
 
-#pause-screen h1 {
+.pause-screen h1 {
   text-align: center;
   font-size: 4vw;
 }
 
-#pause-screen h2 {
+.pause-screen h2 {
   text-align: center;
   font-size: 6vw;
   margin-top: 30%;

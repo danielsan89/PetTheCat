@@ -1,19 +1,20 @@
 import '../scss/style.scss';
 import '../audio/end-of-time-3-.mp3';
 import '../audio/boss-battle.mp3';
+import '../audio/game-over.mp3';
 import '../audio/slash.mp3';
 import '../audio/grunt.wav';
 import '../images/fire2.gif';
 
 
 $(() => {
-
-  //GLOBALS
+  //DOM
   const $player = $('.player');
   const $boss = $('.boss');
   const $portal = $('#portal');
   const $mainScreen = $('#main-screen');
   const $specialAttack = $('#special-attack');
+  const $specialAttackList = $('#special-attack-list');
   const $lifes = $('#lifes');
   const $points = $('#points');
   const $pauseScreen = $('#pause-screen');
@@ -22,16 +23,20 @@ $(() => {
   const $finalScore = $('.finalScore');
   const $stats = $('.lifes');
 
+  //GLOBALS
   const life = '<li class="life">&hearts;</li>';
   const specialAttackIcon = '<li class="specialAttack">#</li>';
   const playerSpecialAttackClassSelector = 'player-special-attack'
   const playerCollidedClassSelector = 'player-collided'
   const mainSong = new Audio('../audio/end-of-time-3-.mp3');
+  const gameOverSong = new Audio('../audio/game-over.mp3');
+  const bossSong = new Audio('../audio/boss-battle.mp3');
+  const slash = new Audio('../audio/slash.mp3');
+  const grunt = new Audio('../audio/grunt.wav');
   const ultraBossClass = 'ultra-boss';
   const hiddenClass = 'hidden';
 
   function play() {
-    mainSong.pause()
     //VARIABLES FOR MOVES
     const cpuPortalMoveX = {
       1: '0%',
@@ -68,6 +73,7 @@ $(() => {
     let portal = null;
     let transformBoss = null;
     let specialAttack = null;
+
     //BOOLEAN FOR WIN/LOSE LOGIC
     let lose = false;
 
@@ -75,18 +81,11 @@ $(() => {
     //TIMERS
     function upgradeBoss() {
       let transformation = 0;
-      let transformation2 = 0;
-      transformBoss = setInterval(function () {
+      transformBoss = setInterval(() => {
         $boss.toggleClass(ultraBossClass);
+        $mainScreen.toggleClass('main-screen-boss');
         if (++transformation === 15) {
           window.clearInterval(transformBoss);
-        }
-      }, 200);
-
-      transformBackground = setInterval(function () {
-        $mainScreen.toggleClass('main-screen-2');
-        if (++transformation2 === 15) {
-          window.clearInterval(transformBackground);
         }
       }, 200);
     }
@@ -106,11 +105,11 @@ $(() => {
       pointerPoints = setInterval(() => {
         points++;
         $points.text(points);
+        if (points > 3000) {
+          $boss.toggleClass('boss');
+        }
       }, 10);
 
-      if (points > 3000) {
-        $boss.toggleClass('boss');
-      }
     }
 
     function stopPoints() {
@@ -139,18 +138,18 @@ $(() => {
 
     //COLLISIONS
     function collision($player, $boss) {
-      var playerLeft = $player.offset().left;
-      var playerTop = $player.offset().top;
-      var playerBottom = $player.outerHeight(true);
-      var playerRight = $player.outerWidth(true);
-      var b1 = playerTop + playerBottom;
-      var r1 = playerLeft + playerRight;
-      var cpuLeft = $boss.offset().left;
-      var cpuTop = $boss.offset().top;
-      var cpuBottom = $boss.outerHeight(true);
-      var cpuRight = $boss.outerWidth(true);
-      var b2 = cpuTop + cpuBottom;
-      var r2 = cpuLeft + cpuRight;
+      const playerLeft = $player.offset().left;
+      const playerTop = $player.offset().top;
+      const playerBottom = $player.outerHeight(true);
+      const playerRight = $player.outerWidth(true);
+      const b1 = playerTop + playerBottom;
+      const r1 = playerLeft + playerRight;
+      const cpuLeft = $boss.offset().left;
+      const cpuTop = $boss.offset().top;
+      const cpuBottom = $boss.outerHeight(true);
+      const cpuRight = $boss.outerWidth(true);
+      const b2 = cpuTop + cpuBottom;
+      const r2 = cpuLeft + cpuRight;
 
       if (b1 < cpuTop || playerTop > b2 || r1 < cpuLeft || playerLeft > r2) return -1;
       return 1;
@@ -169,7 +168,7 @@ $(() => {
       if (playerCollision.includes(1)) {
         points += 500;
         if (!superBoss) {
-          playBGMusic();
+          bossSong.play();
           upgradeBoss();
           levelUp();
           startCPUMovement();
@@ -177,7 +176,7 @@ $(() => {
           startPoints();
           superBoss = true;
         }
-        playSlash();
+        slash.play();
       }
       playerCollision = [];
     }
@@ -207,7 +206,7 @@ $(() => {
         clearInterval(duration);
       }, 1000);
       lifes--;
-      playGrunt();
+      grunt.play();
     }
 
 
@@ -415,7 +414,7 @@ $(() => {
     }
 
     function specialCasted() {
-      $('#special li:last').remove();
+      ($specialAttackList + ' li:last').remove();
       if (specialAttackCast >= 0) {
         addLife();
       }
@@ -450,6 +449,7 @@ $(() => {
     }
     function showGameOverScreen() {
       $gameOverScreen.toggleClass(hiddenClass);
+      $mainScreen.toggleClass('main-screen-game-over');
     }
     function hideStatsScreen() {
       $stats.toggleClass(hiddenClass);
@@ -465,25 +465,12 @@ $(() => {
         finalScore();
         hideStatsScreen();
         showGameOverScreen();
+        $boss.removeClass(ultraBossClass);
+        $boss.addClass('boss-game-over');
+        bossSong.pause();
+        gameOverSong.play();
         lose = true;
       }
-    }
-
-    //SOUNDS
-    function playBGMusic() {
-      const mainSong = new Audio('../audio/boss-battle.mp3');
-      mainSong.loop = true;
-      mainSong.play();
-    }
-
-    function playSlash() {
-      const slash = new Audio('../audio/slash.mp3');
-      slash.play();
-    }
-
-    function playGrunt() {
-      const hit = new Audio('../audio/grunt.wav');
-      hit.play();
     }
 
     //GET NEW COORDINATES IF WINDOW IS RESIZED
@@ -507,11 +494,12 @@ $(() => {
 
     //BUTTONS MENU
     $('#play').one('click', function (event) {
+      mainSong.pause();
       for (let i = 0; i < lifes; i++) {
         $lifes.append(life);
       }
       for (let i = 0; i < specialAttackCast; i++) {
-        $('#special').append(specialAttackIcon);
+        $specialAttackList.append(specialAttackIcon);
       }
       event.preventDefault();
       hidePauseScreen();

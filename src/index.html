@@ -16,25 +16,25 @@
 <body>
   <div class="game-screen hidden main-screen" id="main-screen">
     <div class="game-stats">
-      <div class="lifes">
-        <ul id="lifes">
+      <div>
+        <ul class="lifes" id="lifes">
         </ul>
       </div>
-      <div class="special">
-        <ul id="special">
+      <div>
+        <ul class="special-attack-list" id="special-attack-list">
         </ul>
       </div>
     </div>
     <p class="points">POINTS:<span id="points"></span></p>
     <div class="boss">
-      <img class="hidden" id="special-attack" src="/images/fire2.gif">
+      <img class="hidden special-attack" id="special-attack" src="/images/fire2.gif">
     </div>
-    <div id="portal"></div>
-    <div class="player"></div>
+    <div class="portal" id="portal"></div>
+    <div class="player" id="player"></div>
   </div>
-  <div class="game-screen" id="pause-screen">
-    <h2>PORTAL</h2>
-    <h1>SURVIVE</h1>
+  <div class="game-screen pause-screen" id="pause-screen">
+    <h2>PET</h2>
+    <h1>THE CAT</h1>
   </div>
   <div class="game-screen hidden" id="instructions-screen">
     <h2>#0: press <span class='key'>SHIFT</span> to attack</h2>
@@ -45,15 +45,15 @@
     <h2>#5: don't get hit</h2>
     <h1>GOOD LUCK!</h1>
   </div>
-  <div class="game-screen hidden" id="game-over">
+  <div class="game-screen game-over hidden" id="game-over">
     <h2>GAME OVER</h2>
   </div>
-  <div class="game-screen" id="game-actions">
+  <div class="game-screen game-actions" id="game-actions">
     <div class="menu">
       <button id="play">Play</button>
       <button id="instructions">Instructions</button>
       <button id="restart">Restart</button>
-      <button id="mute-button">Mute</i></button>
+      <button id="mute-button">Mute</button>
     </div>
   </div>
 </body>

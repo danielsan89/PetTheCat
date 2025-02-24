@@ -2,15 +2,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Gulp PET THE CAT",
-            "type": "node",
+            "name": "Launch Chrome",
             "request": "launch",
-            "program": "${workspaceFolder}/node_modules/gulp/bin/gulp.js",
-            "runtimeVersion": "22",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
-            "console": "integratedTerminal"
-        }
+            "type": "chrome",
+            "url": "http://localhost:9000",
+            "webRoot": "${workspaceFolder}"
+        },
     ]
 }
