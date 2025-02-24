@@ -1,22 +1,39 @@
-$(()=>{
+import '../scss/style.scss';
+import '../audio/end-of-time-3-.mp3';
+import '../audio/boss-battle.mp3';
+import '../audio/slash.mp3';
+import '../audio/grunt.wav';
+import '../images/fire2.gif';
+
+
+$(() => {
 
   //GLOBALS
   const $player = $('.player');
-  const $boss= $('.boss');
-  const $portal =$('#portal');
-  const $mainScreen= $('#mainScreen');
-  const $specialAttack = $('#specialAttack');
-  const $life = $('#life');
-  const $points=$('#points');
-  const $pauseScreen= $('#pauseScreen');
-  const $instructionsScreen = $('#instructionsScreen');
-  const $gameOverScreen = $('#gameOver');
-  const $finalScore =$('.finalScore');
+  const $boss = $('.boss');
+  const $portal = $('#portal');
+  const $mainScreen = $('#main-screen');
+  const $specialAttack = $('#special-attack');
+  const $lifes = $('#lifes');
+  const $points = $('#points');
+  const $pauseScreen = $('#pause-screen');
+  const $instructionsScreen = $('#instructions-screen');
+  const $gameOverScreen = $('#game-over');
+  const $finalScore = $('.finalScore');
   const $stats = $('.lifes');
 
-  function play(){
+  const life = '<li class="life">&hearts;</li>';
+  const specialAttackIcon = '<li class="specialAttack">#</li>';
+  const playerSpecialAttackClassSelector = 'player-special-attack'
+  const playerCollidedClassSelector = 'player-collided'
+  const mainSong = new Audio('../audio/end-of-time-3-.mp3');
+  const ultraBossClass = 'ultra-boss';
+  const hiddenClass = 'hidden';
+
+  function play() {
+    mainSong.pause()
     //VARIABLES FOR MOVES
-    const cpuPortalMoveX={
+    const cpuPortalMoveX = {
       1: '0%',
       2: '15%',
       3: '30%',
@@ -24,87 +41,99 @@ $(()=>{
       5: '60%',
       6: '70%'
     };
-    const cpuPortalMoveY={
+    const cpuPortalMoveY = {
       1: '50%',
       2: '40%',
       3: '30%'
     };
 
     //STATS OF THE GAME
-    let lifes=6;
-    let specialAttackCast= 3;
-    let portalCollision=[];
-    let playerCollision =[];
-    let bossCollision =[];
+    let lifes = 6;
+    let specialAttackCast = 3;
+    let portalCollision = [];
+    let playerCollision = [];
+    let bossCollision = [];
     let gameSpeed = 2;
-    let points=0;
+    let points = 0;
     let gameScreenTop = $mainScreen.offset().top;
     let gameScreenLeft = $mainScreen.offset().left;
     let gameScreenRight = gameScreenLeft + $mainScreen.outerWidth(true);
     let gameScreenBottom = $mainScreen.outerHeight(true);
-    let superBoss=false;
+    let superBoss = false;
 
     //VARIABLES FOR TIMERS
     let levels = null;
     let pointerPoints = null;
-    let cpuMovement=null;
-    let portal= null;
-    let transformBoss=null;
-    let specialAttack=null;
+    let cpuMovement = null;
+    let portal = null;
+    let transformBoss = null;
+    let specialAttack = null;
     //BOOLEAN FOR WIN/LOSE LOGIC
-    let lose=false;
+    let lose = false;
 
 
     //TIMERS
-    function upgradeBoss(){
+    function upgradeBoss() {
       let transformation = 0;
+      let transformation2 = 0;
       transformBoss = setInterval(function () {
-        $boss.toggleClass('ultraBoss');
+        $boss.toggleClass(ultraBossClass);
         if (++transformation === 15) {
           window.clearInterval(transformBoss);
+        }
+      }, 200);
+
+      transformBackground = setInterval(function () {
+        $mainScreen.toggleClass('main-screen-2');
+        if (++transformation2 === 15) {
+          window.clearInterval(transformBackground);
         }
       }, 200);
     }
 
 
-    function levelUp(){
-      levels = setInterval(()=>{
-        gameSpeed+=0.1;
-      },4000/gameSpeed);
+    function levelUp() {
+      levels = setInterval(() => {
+        gameSpeed += 0.1;
+      }, 4000 / gameSpeed);
     }
 
-    function stopLevelUp(){
+    function stopLevelUp() {
       clearInterval(levels);
     }
 
-    function startPoints(){
-      pointerPoints = setInterval(()=>{
+    function startPoints() {
+      pointerPoints = setInterval(() => {
         points++;
         $points.text(points);
-      },10);
+      }, 10);
+
+      if (points > 3000) {
+        $boss.toggleClass('boss');
+      }
     }
 
-    function stopPoints(){
+    function stopPoints() {
       clearInterval(pointerPoints);
     }
 
-    function startCPUMovement(){
-      cpuMovement= setInterval( ()=>{
+    function startCPUMovement() {
+      cpuMovement = setInterval(() => {
         cpuDash();
-      },10000/gameSpeed);
+      }, 10000 / gameSpeed);
     }
 
-    function stopCPUMovement(){
+    function stopCPUMovement() {
       clearInterval(cpuMovement);
     }
 
-    function startPortal(){
-      portal=setInterval(()=>{
+    function startPortal() {
+      portal = setInterval(() => {
         cpuPortalAttack();
-      },6000/gameSpeed);
+      }, 6000 / gameSpeed);
     }
 
-    function stopPortal(){
+    function stopPortal() {
       clearInterval(portal);
     }
 
@@ -127,66 +156,67 @@ $(()=>{
       return 1;
     }
 
-    function storeCollisionPortal(){
-      portalCollision.push(collision($portal,$player));
+    function storeCollisionPortal() {
+      portalCollision.push(collision($portal, $player));
     }
 
-    function storeCollisionCPU(){
-      bossCollision.push(collision($boss,$player));
+    function storeCollisionCPU() {
+      bossCollision.push(collision($boss, $player));
     }
 
-    function storeCollisionPlayer(){
-      playerCollision.push(collision($player,$boss));
-      if(playerCollision.includes(1)){
-        points+=500;
-        if(!superBoss){
+    function storeCollisionPlayer() {
+      playerCollision.push(collision($player, $boss));
+      if (playerCollision.includes(1)) {
+        points += 500;
+        if (!superBoss) {
           playBGMusic();
           upgradeBoss();
           levelUp();
           startCPUMovement();
           startPortal();
           startPoints();
-          superBoss=true;
+          superBoss = true;
         }
         playSlash();
       }
-      playerCollision=[];
+      playerCollision = [];
     }
 
-    function portalDamage(){
-      if(portalCollision.includes(1) || bossCollision.includes(1)){
+    function portalDamage() {
+      if (portalCollision.includes(1) || bossCollision.includes(1)) {
         $('#life li:last').remove();
         playerCollided();
         checkLose();
       }
-      portalCollision=[];
+      portalCollision = [];
     }
 
-    function bossDamage(){
-      if(bossCollision.includes(1)){
+    function bossDamage() {
+      if (bossCollision.includes(1)) {
         $('#life li:last').remove();
         playerCollided();
         checkLose();
       }
-      bossCollision=[];
+      bossCollision = [];
     }
 
-    function playerCollided(){
+    function playerCollided() {
       playerCollidedEffects();
-      const duration = setInterval(playerCollidedEffects ,999);
-      setTimeout(function() {
-        clearInterval( duration );
+      const duration = setInterval(playerCollidedEffects, 999);
+      setTimeout(function () {
+        clearInterval(duration);
       }, 1000);
       lifes--;
+      playGrunt();
     }
 
 
     //CPU MOVES
-    function cpuDash(){
+    function cpuDash() {
       $boss.animate({
         left: '-=10%'
       }, {
-        duration: 2000/gameSpeed,
+        duration: 2000 / gameSpeed,
         progress: () => storeCollisionCPU(),
         complete() {
           $boss.animate({ left: '+=10%' }, 100);
@@ -196,26 +226,26 @@ $(()=>{
 
     }
 
-    function cpuPortalAttack(){
+    function cpuPortalAttack() {
       const portalPosition = setPortalPosition();
       $portal.animate({
         width: '30%'
       }, {
-        duration: 4000/gameSpeed,
+        duration: 4000 / gameSpeed,
         progress: () => storeCollisionPortal(),
         complete() {
 
-          $portal.css({top: cpuPortalMoveY[portalPosition[1]], left: cpuPortalMoveX[portalPosition[0]], width: ''});
+          $portal.css({ top: cpuPortalMoveY[portalPosition[1]], left: cpuPortalMoveX[portalPosition[0]], width: '' });
           portalDamage();
         }
       });
     }
 
     //RANDOM POSITIONING FOR PORTAL
-    function setPortalPosition(){
-      const portalPosition=[];
+    function setPortalPosition() {
+      const portalPosition = [];
       portalPosition.push(1 + Math.floor(Math.random() * 6));
-      portalPosition.push( 1 + Math.floor(Math.random() * 3));
+      portalPosition.push(1 + Math.floor(Math.random() * 3));
       return portalPosition;
     }
 
@@ -244,39 +274,39 @@ $(()=>{
       }
     }
 
-    function playerSpecialAttack(){
-      if(specialAttackCast<1){
+    function playerSpecialAttack() {
+      if (specialAttackCast < 1) {
         specialAttackCast--;
         return false;
       }
       playerSpecialAttackEffects();
-      specialAttack = setInterval(playerSpecialAttackEffects ,999);
-      setTimeout(function() {
-        clearInterval( specialAttack );
+      specialAttack = setInterval(playerSpecialAttackEffects, 999);
+      setTimeout(function () {
+        clearInterval(specialAttack);
       }, 1000);
       specialAttackCast--;
     }
 
-    function playerSpecialAttackEffects(){
-      $player.toggleClass('playerSpecialAttack');
-      $specialAttack.toggleClass('hidden');
+    function playerSpecialAttackEffects() {
+      $player.toggleClass(playerSpecialAttackClassSelector);
+      $specialAttack.toggleClass(hiddenClass);
     }
 
-    function playerDash(){
-      if(checkDash() && isMirror()){
+    function playerDash() {
+      if (checkDash() && isMirror()) {
         playerDashLeft();
-      }else if(checkDash() && !isMirror()){
+      } else if (checkDash() && !isMirror()) {
         playerDashRight();
       }
     }
 
-    function playerDashLeft(){
+    function playerDashLeft() {
       const playerLeft = $player.offset().left;
-      const playerLeftDash = playerLeft-playerLeft*0.3;
-      if(playerLeftDash<gameScreenLeft){
-      //if($player.offset().left-($player.offset().left-$player.offset().left*0.3)>$player.offset().left-$mainScreen.offset().left){
+      const playerLeftDash = playerLeft - playerLeft * 0.3;
+      if (playerLeftDash < gameScreenLeft) {
+        //if($player.offset().left-($player.offset().left-$player.offset().left*0.3)>$player.offset().left-$mainScreen.offset().left){
         return false;
-      }else{
+      } else {
         $player.animate({
           left: '-=20%'
         }, {
@@ -286,13 +316,13 @@ $(()=>{
       }
     }
 
-    function playerDashRight(){
+    function playerDashRight() {
       const gameScreenRight = (gameScreenLeft + $mainScreen.outerWidth());
-      const playerRight = $player.offset().left+$player.outerWidth(true);
-      const playerRightDash = playerRight+playerRight*0.3;
-      if(playerRightDash>gameScreenRight){
+      const playerRight = $player.offset().left + $player.outerWidth(true);
+      const playerRightDash = playerRight + playerRight * 0.3;
+      if (playerRightDash > gameScreenRight) {
         return false;
-      }else{
+      } else {
         $player.animate({
           left: '+=20%'
         }, {
@@ -302,132 +332,132 @@ $(()=>{
       }
     }
 
-    function playerLeftMove(){
-      if(playerCheckLeftMirror()){
-        $player.animate({left: '-=3%'}, 1);
+    function playerLeftMove() {
+      if (playerCheckLeftMirror()) {
+        $player.animate({ left: '-=3%' }, 1);
         return false;
-      }else if(playerCheckLeftNoMirror()){
+      } else if (playerCheckLeftNoMirror()) {
         mirror();
-        $player.animate({left: '-=3%'}, 1);
+        $player.animate({ left: '-=3%' }, 1);
         return false;
       }
     }
 
-    function playerRightMove(){
-      if(playerCheckRightMirror()){
+    function playerRightMove() {
+      if (playerCheckRightMirror()) {
         return false;
-      }else if(playerCheckRightNoMirror()){
+      } else if (playerCheckRightNoMirror()) {
         mirror();
-        $player.animate({left: '+=3%'}, 1);
+        $player.animate({ left: '+=3%' }, 1);
         return false;
       }
-      $player.animate({left: '+=3%'}, 1);
+      $player.animate({ left: '+=3%' }, 1);
     }
 
-    function playerUpMove(){
-      if(playerCheckUp()){
+    function playerUpMove() {
+      if (playerCheckUp()) {
         return false;
       }
-      $player.animate({top: '-=2%'}, 1);
+      $player.animate({ top: '-=2%' }, 1);
     }
 
-    function playerDownMove(){
-      if(playerCheckDown()){
+    function playerDownMove() {
+      if (playerCheckDown()) {
         return false;
       }
-      $player.animate({top: '+=2%'}, 1);
+      $player.animate({ top: '+=2%' }, 1);
     }
 
     //CHECKS FENCES
-    function isMirror(){
+    function isMirror() {
       return ($player.hasClass('mirror'));
     }
 
-    function playerCheckUp(){
-      return (($player.offset().top-$player.offset().top*0.01)<=gameScreenBottom*0.5);
+    function playerCheckUp() {
+      return (($player.offset().top - $player.offset().top * 0.01) <= gameScreenBottom * 0.5);
     }
 
-    function playerCheckDown(){
-      return (($player.offset().top-$player.offset().top*0.01)>=gameScreenBottom-$player.outerHeight());
+    function playerCheckDown() {
+      return (($player.offset().top - $player.offset().top * 0.01) >= gameScreenBottom - $player.outerHeight());
     }
 
-    function playerCheckRightMirror(){
-      return (($player.offset().left+($player.offset().left)*0.09)>=gameScreenRight);
+    function playerCheckRightMirror() {
+      return (($player.offset().left + ($player.offset().left) * 0.09) >= gameScreenRight);
     }
 
-    function playerCheckRightNoMirror(){
-      return (($player.offset().left+($player.offset().left)*0.09)<gameScreenRight+$player.outerWidth() && $player.hasClass('mirror'));
+    function playerCheckRightNoMirror() {
+      return (($player.offset().left + ($player.offset().left) * 0.09) < gameScreenRight + $player.outerWidth() && $player.hasClass('mirror'));
     }
 
-    function playerCheckLeftMirror(){
-      return (($player.offset().left-$player.offset().left*0.01)>=gameScreenLeft && $player.hasClass('mirror'));
+    function playerCheckLeftMirror() {
+      return (($player.offset().left - $player.offset().left * 0.01) >= gameScreenLeft && $player.hasClass('mirror'));
     }
 
-    function playerCheckLeftNoMirror(){
-      return (($player.offset().left-$player.offset().left*0.01)>=gameScreenLeft && !$player.hasClass('mirror'));
+    function playerCheckLeftNoMirror() {
+      return (($player.offset().left - $player.offset().left * 0.01) >= gameScreenLeft && !$player.hasClass('mirror'));
     }
 
-    function checkDash(){
-      if($player.hasClass('playerCollided') || $player.hasClass('playerSpecialAttack')){
+    function checkDash() {
+      if ($player.hasClass(playerCollidedClassSelector) || $player.hasClass(playerSpecialAttackClassSelector)) {
         return false;
       }
       return true;
     }
 
-    function mirror(){
+    function mirror() {
       $player.toggleClass('mirror');
     }
 
     //OTHERS
-    function playerCollidedEffects(){
-      $player.toggleClass('playerCollided');
+    function playerCollidedEffects() {
+      $player.toggleClass(playerCollidedClassSelector);
 
     }
 
-    function specialCasted(){
+    function specialCasted() {
       $('#special li:last').remove();
-      if(specialAttackCast>=0){
+      if (specialAttackCast >= 0) {
         addLife();
       }
     }
 
-    function addLife(){
-      if(lifes<6){
-        $life.append('<li class="life">&hearts;</li>');
+    function addLife() {
+      if (lifes < 6) {
+        $lifes.append(life);
         lifes++;
       }
     }
 
-    function finalScore(){
+    function finalScore() {
       $finalScore.text($points);
     }
 
     //TOGGLES
-    function showUltraBoss(){
-      $boss.toggleClass('ultraBoss');
+    function showUltraBoss() {
+      $boss.toggleClass(ultraBossClass);
     }
 
-    function showMainScreen(){
-      $mainScreen.toggleClass('hidden');
+    function showMainScreen() {
+      $mainScreen.toggleClass(hiddenClass);
 
     }
-    function showInstructionsScreen(){
-      $instructionsScreen.toggleClass('hidden');
+    function showInstructionsScreen() {
+      $instructionsScreen.toggleClass(hiddenClass);
 
     }
-    function hidePauseScreen(){
-      $pauseScreen.addClass('hidden');
+    function hidePauseScreen() {
+      $pauseScreen.addClass(hiddenClass);
     }
-    function showGameOverScreen(){
-      $gameOverScreen.toggleClass('hidden');
+    function showGameOverScreen() {
+      $gameOverScreen.toggleClass(hiddenClass);
     }
-    function hideStatsScreen(){
-      $stats.toggleClass('hidden');
+    function hideStatsScreen() {
+      $stats.toggleClass(hiddenClass);
     }
 
     //WIN OR LOSE
-    function checkLose(){
-      if(lifes<1){
+    function checkLose() {
+      if (lifes < 1) {
         stopLevelUp();
         stopCPUMovement();
         stopPortal();
@@ -435,63 +465,77 @@ $(()=>{
         finalScore();
         hideStatsScreen();
         showGameOverScreen();
-        lose=true;
+        lose = true;
       }
     }
 
     //SOUNDS
-    function playBGMusic(){
-      const mainSong = new Audio('/public/audio/mainSong.mp3');
-      mainSong.loop=true;
-      mainSong.autoplay=true;
+    function playBGMusic() {
+      const mainSong = new Audio('../audio/boss-battle.mp3');
+      mainSong.loop = true;
+      mainSong.play();
     }
 
-    function playSlash(){
-      const slash = new Audio('/public/audio/slash.mp3');
-      slash.autoplay=true;
+    function playSlash() {
+      const slash = new Audio('../audio/slash.mp3');
+      slash.play();
+    }
+
+    function playGrunt() {
+      const hit = new Audio('../audio/grunt.wav');
+      hit.play();
     }
 
     //GET NEW COORDINATES IF WINDOW IS RESIZED
     $(window).resize(resizeWindow);
-    function resizeWindow(){
+    function resizeWindow() {
 
       gameScreenTop = $mainScreen.offset().top;
       gameScreenLeft = $mainScreen.offset().left;
       gameScreenRight = (gameScreenLeft + $mainScreen.outerWidth());
-      gameScreenBottom = (gameScreenTop +$mainScreen.outerHeight());
+      gameScreenBottom = (gameScreenTop + $mainScreen.outerHeight());
 
     }
 
     //EVENT TO START CAPTURE PLAYER MOVEMENT
-    $(window).keydown(function() {
-      if(!lose){
+    $(window).keydown(function () {
+      if (!lose) {
         playerMoves(event);
       }
     });
 
 
     //BUTTONS MENU
-    $('#play').one('click',function(event){
+    $('#play').one('click', function (event) {
+      for (let i = 0; i < lifes; i++) {
+        $lifes.append(life);
+      }
+      for (let i = 0; i < specialAttackCast; i++) {
+        $('#special').append(specialAttackIcon);
+      }
       event.preventDefault();
       hidePauseScreen();
       showMainScreen();
-      if(!$instructionsScreen.hasClass('hidden')){
+      if (!$instructionsScreen.hasClass(hiddenClass)) {
         showInstructionsScreen();
       }
       resizeWindow();
     });
 
-    $('#restart').on('click',function(){
+    $('#restart').on('click', function () {
       location.reload();
     });
 
-    $('#instructions').one('click',function(event){
+    $('#instructions').one('click', function (event) {
       event.preventDefault();
       hidePauseScreen();
       showInstructionsScreen();
     });
-    $('#ultraBoss').on('click',showUltraBoss);
   }
+
+  $('#mute-button').one('click', function () {
+    mainSong.play();
+  });
 
   play();
 });

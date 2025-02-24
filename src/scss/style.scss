@@ -1,9 +1,9 @@
 @font-face {
-    font-family: 'Fipps';
-    src: url('/public/fonts/fipps-regular-webfont.woff2') format('woff2'),
-         url('/public/fonts/fipps-regular-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'Fipps';
+  src: url('../fonts/fipps-regular-webfont.woff2') format('woff2'),
+    url('../fonts/fipps-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
 
 * {
@@ -12,218 +12,220 @@
 
 body {
   background: black;
-}
-main{
-  width:50%;
-  margin:0 auto;
-  border:1vw dashed gold;
+  width: 50%;
+  margin: 0 auto;
+  border: 1vw dashed gold;
 }
 
-main img{
+
+img {
   max-width: 100%;
   max-height: 100%;
 }
 
-main p{
-  color:white;
-}
-
-main div.gameScreen{
-  position:relative;
-  padding:0.5%;
-  margin:0.5%;
+p {
   color: white;
 }
 
-main div#mainScreen{
-  position:relative;
-  height:40vw;
-  background-image: url('/public/images/bg2.jpg');
+.game-screen {
+  position: relative;
+  padding: 0.5%;
+  margin: 0.5%;
+  color: white;
+}
+
+.main-screen {
+  position: relative;
+  height: 40vw;
+  background-image: url('../images/bg2.jpg');
   background-position: top;
-  background-size:contain;
+  background-size: contain;
   background-repeat: no-repeat;
 }
 
-main div#mainScreenNight{
-  position:relative;
-  height:40vw;
-  background-image: url('/public/images/bg2.jpg');
+.main-screen-2 {
+  position: relative;
+  height: 40vw;
+  background-image: url('../images/bg1.jpg');
   background-position: top;
-  background-size:contain;
+  background-size: contain;
   background-repeat: no-repeat;
 }
 
-main div#pauseScreen{
-  position:relative;
-  height:40vw;
-  background-image: url('/public/images/bg2.jpg');
+
+#pause-screen {
+  position: relative;
+  height: 40vw;
+  background-image: url('../images/bg2.jpg');
   background-position: top;
-  background-size:contain;
+  background-size: contain;
   background-repeat: no-repeat;
 
 }
 
-main div#instructionsScreen{
-  position:relative;
-  height:40vw;
+#instructions-screen {
+  position: relative;
+  height: 40vw;
   font-size: 1vw;
 }
 
 
-main div#statsScreen{
+#game-actions {
 
-  position:relative;
-  height:7vw;
-  border-top:1vw dashed gold;
+  position: relative;
+  height: 7vw;
+  border-top: 1vw dashed gold;
 }
 
-main div#gameOver{
-  text-align:center;
-  position:relative;
-  height:auto;
-  border-top:1vw dashed gold;
+#game-over {
+  text-align: center;
+  position: relative;
+  height: auto;
+  border-top: 1vw dashed gold;
 }
 
-main div#statsScreen ul#life{
+#game-actions ul#life {
   font-size: 2vw;
-  color:red;
+  color: red;
   list-style: none;
   text-align: center;
 }
 
-main div#statsScreen ul#life li{
+#game-actions ul#life li {
   display: inline-block;
   padding-right: 2vw;
   vertical-align: middle;
-  padding:0
+  padding: 0
 }
 
-main div#mainScreen ul#specialAttack{
+#main-screen ul#special-attack {
   display: inline-block;
   list-style-type: none;
   padding-right: 2vw;
   vertical-align: middle;
-  padding:0;
+  padding: 0;
 }
 
-main div#mainScreen ul#special li{
+#main-screen ul#special li {
   display: inline-block;
   list-style-type: none;
   padding-right: 1vw;
   vertical-align: middle;
-  padding:0;
+  padding: 0;
 }
 
-main div#statsScreen ul#specialAttack li img{
-  height:2vw;
-  width:2vw;
+#game-actions ul#special-attack li img {
+  height: 2vw;
+  width: 2vw;
 }
 
-main div.player{
-  width:5vw;
-  height:5vw;
-  // border:1px solid red;
-  position:absolute;
-  top:50%;
-  left:0%;
-  background-image: url('/public/images/chrono.gif');
+.player {
+  width: 5vw;
+  height: 5vw;
+  border: 1px solid red;
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  background-image: url('../images/chrono.gif');
   background-size: contain;
 }
 
-main div.playerSpecialAttack{
-  // border:1px solid red;
-  position:absolute;
-  top:50%;
-  float:left;
-  background-image: url('/public/images/CronoLuminaire.gif');
+.player-special-attack {
+  border: 1px solid red;
+  position: absolute;
+  top: 50%;
+  float: left;
+  background-image: url('../images/CronoLuminaire.gif');
   background-size: contain;
 }
 
-main div.playerCollided{
-  // border:1px solid red;
-  position:absolute;
-  top:50%;
-  float:left;
-  background-image: url('/public/images/chronoHit.png');
+.player-collided {
+  border: 1px solid red;
+  position: absolute;
+  top: 50%;
+  float: left;
+  background-image: url('../images/chronoHit.png');
   background-size: contain;
 }
 
-main div.boss{
-  width:3vw;
-  height:3vw;
-  //border:1px solid green;
-  position:absolute;
-  top:50%;
-  left:60%;
-  background-image: url('/public/images/boss3.gif');
+.boss {
+  width: 3vw;
+  height: 3vw;
+  border: 1px solid green;
+  position: absolute;
+  top: 50%;
+  left: 60%;
+  background-image: url('../images/boss3.gif');
   background-size: contain;
+
 }
 
-main div.ultraBoss{
-  width:20vw;
-  height:20vw;
-  // border:1px solid green;
-  position:absolute;
-  top:20%;
-  left:60%;
-  background-image: url('/public/images/cat-boss.gif');
-  background-size:contain;
+.ultra-boss {
+  width: 15vw; // Smaller width for hitbox
+  height: 1f5vw; // Smaller height for hitbox
+  border: 1px solid green;
+  position: absolute;
+  top: 20%;
+  left: 60%;
+  border-radius: 50% / 30%;
+  overflow: visible;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30vw;
+    height: 30vw;
+    background-image: url('../images/scratch-cat-claws.gif');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transform: translate(-50%, -50%);
+  }
+}
+
+
+#portal {
+  border: 1px solid red;
+  background-image: url('../images/portal.gif');
+  background-size: contain;
   background-repeat: no-repeat;
-  background-position: center;
-  text-align: center;
-}
-
-
-main div#portal{
-  // border:1px solid red;
-  background-image: url('/public/images/portal.gif');
-  background-size:contain;
-  background-repeat: no-repeat;
-  position:absolute;
-  top:0%;
-  left:60%;
+  position: absolute;
+  top: 0%;
+  left: 60%;
   // width:6vw;
-  height:15vw;
+  height: 15vw;
 }
 
-main div#dragon{
-  //border:1px solid red;
-  background-image: url('/public/images/Dragon_tank.gif');
-  background-size:contain;
-  background-repeat: no-repeat;
-  position:absolute;
-  top:78%;
-  float:left;
-  width:12vw;
-  height:12vw;
-}
 
-main div ul#special{
-  color:#FF6700 ;
+#special {
+  color: #FF6700;
   font-size: 1vw;
-  padding:0;
+  padding: 0;
 }
 
-main div#pauseScreen h1{
+#pause-screen h1 {
   text-align: center;
   font-size: 4vw;
 }
-main div#pauseScreen h2{
+
+#pause-screen h2 {
   text-align: center;
   font-size: 6vw;
-  margin-top:30%;
+  margin-top: 30%;
 }
 
-div.menu{
-  margin:0 auto;
+.menu {
+  margin: 0 auto;
   text-align: center;
 }
 
-p.points{
-  font-size:1vw;
+.points {
+  font-size: 1vw;
 }
 
-.mirror{
+.mirror {
   -moz-transform: scaleX(-1);
   -o-transform: scaleX(-1);
   -webkit-transform: scaleX(-1);
@@ -231,11 +233,17 @@ p.points{
   filter: FlipH;
   -ms-filter: 'FlipH';
 }
-.hidden{
+
+.hidden {
   visibility: hidden;
   display: none;
 }
 
-.key{
-  color:orange;
+.key {
+  color: orange;
+}
+
+.small-image {
+  width: 2vw;
+  height: 2vw;
 }
